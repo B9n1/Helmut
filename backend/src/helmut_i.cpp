@@ -3,7 +3,7 @@
 /******************************************************/
 
 #include "Particle.h"
-#line 1 "c:/Users/Helmut/Schulprojekte/IoT/Helmut/helmut_i/src/helmut_i.ino"
+#line 1 "c:/Users/Helmut/Schulprojekte/IoT/Helmut_Git/Helmut/backend/src/helmut_i.ino"
 #include <Wire.h>
 #include <SPI.h>
 #include <Adafruit_LSM9DS1.h>
@@ -14,7 +14,7 @@
 void setupSensor();
 void setup();
 void loop();
-#line 8 "c:/Users/Helmut/Schulprojekte/IoT/Helmut/helmut_i/src/helmut_i.ino"
+#line 8 "c:/Users/Helmut/Schulprojekte/IoT/Helmut_Git/Helmut/backend/src/helmut_i.ino"
 Adafruit_LSM9DS1 lsm = Adafruit_LSM9DS1();
 
 #define LSM9DS1_SCK A5
@@ -114,7 +114,7 @@ void loop()
     if (fabs(max_z) > fabs(pmax_z)) {
       pmax_z = max_z;
     }
-    Serial.println("Max values over last 1000 ticks: "); 
+    Serial.println("Max values over last 2000 ticks: "); 
     Serial.print("max_x: "); Serial.print(max_x); Serial.print("  max_y: "); Serial.print(max_y); Serial.print("  max_z: "); Serial.println(max_z);
     Particle.publish("max_x", String(max_x));
     Particle.publish("max_y", String(max_y));

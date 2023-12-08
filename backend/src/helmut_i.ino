@@ -104,7 +104,7 @@ void loop()
     if (fabs(max_z) > fabs(pmax_z)) {
       pmax_z = max_z;
     }
-    Serial.println("Max values over last 1000 ticks: "); 
+    Serial.println("Max values over last 2000 ticks: "); 
     Serial.print("max_x: "); Serial.print(max_x); Serial.print("  max_y: "); Serial.print(max_y); Serial.print("  max_z: "); Serial.println(max_z);
     Particle.publish("max_x", String(max_x));
     Particle.publish("max_y", String(max_y));

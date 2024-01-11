@@ -24,7 +24,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscribeToSensorData();
-    this.alert = true;
   }
 
   getMaxValueRoundedTo2Digits(v1: number, v2: number, v3: number) {
@@ -35,7 +34,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     if ((Math.round(v3 * 100) / 100) > tempMaxValue) {
       tempMaxValue = v3;
     }
-    console.log("Max value between " + v1 + ", " + v2 + ", " + v3 + " is " + (Math.round(tempMaxValue * 100) / 100));
+    // console.log("Max value between " + v1 + ", " + v2 + ", " + v3 + " is " + (Math.round(tempMaxValue * 100) / 100));
     return (Math.round(tempMaxValue * 100) / 100);
   }
 

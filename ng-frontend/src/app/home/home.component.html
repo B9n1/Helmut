@@ -1,24 +1,33 @@
 <div class="centered-content">
     @if (alert) {
-        <div class="alert">
-            <h1>The helmet has crashed</h1>
-            <h2>Shock of {{(maxValueCrash/10 | number: '1.1-1')}}G was measured</h2>
-        </div>
-        <div class="footer">
-            <button class="button" role="button" (click)="alert = false">Reset</button>
-        </div>
-        
-        
-    } @else {
-        <div>
-        <h2>Current biggest shock:</h2>
-        <!-- <p>Max_X: {{sensorData.Max_X}}</p>
-        <p>Max_Y: {{sensorData.Max_Y}}</p>
-        <p>Max_Z: {{sensorData.Max_Z}}</p> -->
-        <p>{{(maxValue/10 | number: '1.1-1')}}G</p>
+        <div class="change-container">
+            <div class="helmet-icon">
 
-    </div>
+            </div>
+            <div class="infobox-crash">
+                <h2>Höchstwert</h2>
+                <h3>{{maxValueCrash/10 | number: '1.1-1'}}G</h3>
+                <h2>Status</h2>
+                <h3>ALARM</h3>
+            </div>
+        </div> 
+    } @else {
+        <div class="change-container">
+            <div class="helmet-icon">
+
+            </div>
+            <div class="infobox-ok">
+                <h2>Letzter Messwert</h2>
+                <h3>{{maxValue/10 | number: '1.1-1'}}G</h3>
+                <h2>Status</h2>
+                <h3>OK</h3>
+            </div>
+        </div>
     }
+    <div class="button-container">
+        <button class="reset-button" [disabled]="!alert" (click)="alert = false"> RESET </button>
+    </div>
+    
 </div>
 
 

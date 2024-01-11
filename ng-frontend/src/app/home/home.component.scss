@@ -1,58 +1,65 @@
 .centered-content {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     text-align: center;
+    height: 100%;
 }
 
-.alert {
-    color: red;
+.change-container {
+  margin: auto;
+  height: 90%;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
-.footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: min-content;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: purple;
-    font-weight: 600;
-    margin-bottom: 2dvh;
+.helmet-icon {
+  width: 90%;
+  height: 48%;
+  background-image: url("../../assets/helmet.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-
-
-/* CSS */
-.button {
-  background: linear-gradient(to bottom right, #EF4765, #FF9A5A);
-  border: 0;
-  border-radius: 50%;
-  height: 20dvh;
-  width: 20dvh;
-  color: #FFFFFF;
-  cursor: pointer;
-  display: inline-block;
-  font-family: -apple-system,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  font-size: 32px;
-  font-weight: 700;
-  line-height: 2.5;
-  outline: transparent;
-  padding: 0 1rem;
+.infobox-ok {
+  width: 100%;
+  height: 44%;
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: #90EE90;
   text-align: center;
-  text-decoration: none;
-  transition: box-shadow .2s ease-in-out;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.button:not([disabled]):focus {
-  box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
+.infobox-crash {
+  width: 100%;
+  height: 44%;
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: rgba(255, 0, 0, 0.862);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.button:not([disabled]):hover {
-  box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
+.button-container {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
 }
+
+.reset-button {
+  width: 90%;
+  height: 90%;
+  float: inline-end;
+  font-size: large;
+}
+

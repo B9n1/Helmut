@@ -3,9 +3,9 @@ import { ChangeDetectorRef } from '@angular/core';
 import { SseService } from '../services/sse.service';
 
 export interface SensorData {
-  Max_X: number;
-  Max_Y: number;
-  Max_Z: number;
+  max_x: number;
+  max_y: number;
+  max_z: number;
 }
 
 @Component({
@@ -43,14 +43,14 @@ export class HomeComponent implements OnInit, OnDestroy {
       (data: SensorData) => {
         // Handle the real-time sensor data
         this.sensorData = data;
-        if (this.sensorData.Max_X > this.CRASH_THRESHOLD || this.sensorData.Max_Y > this.CRASH_THRESHOLD || this.sensorData.Max_Z > this.CRASH_THRESHOLD) {
+        if (this.sensorData.max_x > this.CRASH_THRESHOLD || this.sensorData.max_y > this.CRASH_THRESHOLD || this.sensorData.max_z > this.CRASH_THRESHOLD) {
           this.alert = true;
-          if (this.maxValueCrash < this.getMaxValueRoundedTo2Digits(this.sensorData.Max_X, this.sensorData.Max_Y, this.sensorData.Max_Z)) {
-            this.maxValueCrash = this.getMaxValueRoundedTo2Digits(this.sensorData.Max_X, this.sensorData.Max_Y, this.sensorData.Max_Z);
+          if (this.maxValueCrash < this.getMaxValueRoundedTo2Digits(this.sensorData.max_x, this.sensorData.max_y, this.sensorData.max_z)) {
+            this.maxValueCrash = this.getMaxValueRoundedTo2Digits(this.sensorData.max_x, this.sensorData.max_y, this.sensorData.max_z);
           }
         }
-        if (this.maxValue < this.getMaxValueRoundedTo2Digits(this.sensorData.Max_X, this.sensorData.Max_Y, this.sensorData.Max_Z) && this.alert == false) {
-          this.maxValue = this.getMaxValueRoundedTo2Digits(this.sensorData.Max_X, this.sensorData.Max_Y, this.sensorData.Max_Z);
+        if (this.maxValue < this.getMaxValueRoundedTo2Digits(this.sensorData.max_x, this.sensorData.max_y, this.sensorData.max_z) && this.alert == false) {
+          this.maxValue = this.getMaxValueRoundedTo2Digits(this.sensorData.max_x, this.sensorData.max_y, this.sensorData.max_z);
         }
         this.cdr.detectChanges();
       },

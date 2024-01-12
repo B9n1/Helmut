@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 })
 export class SseService {
   private eventSource: EventSource | undefined = undefined;
-  private sseUrl = 'http://192.168.2.111:3002/sse';
+  private sseUrl = 'http://134.108.246.156:3002/sse';
 
   constructor() {}
 

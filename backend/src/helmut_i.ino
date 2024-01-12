@@ -3,6 +3,17 @@
 #include <Adafruit_LSM9DS1.h>
 #include <Adafruit_Sensor.h>  // not used in this demo but required!
 #include <cmath>
+#include <HttpClient.h>
+
+HttpClient http;
+http_request_t request;
+http_response_t response;
+
+http_header_t headers[] = {
+    { "Accept" , "*/*"},
+    { "Content-Type", "application/json" },
+    { NULL, NULL }
+};
 
 // i2c
 Adafruit_LSM9DS1 lsm = Adafruit_LSM9DS1();
@@ -12,31 +23,15 @@ Adafruit_LSM9DS1 lsm = Adafruit_LSM9DS1();
 #define LSM9DS1_MOSI A4
 #define LSM9DS1_XGCS 6
 #define LSM9DS1_MCS 5
-// You can also use software SPI
-//Adafruit_LSM9DS1 lsm = Adafruit_LSM9DS1(LSM9DS1_SCK, LSM9DS1_MISO, LSM9DS1_MOSI, LSM9DS1_XGCS, LSM9DS1_MCS);
-// Or hardware SPI! In this case, only CS pins are passed in
-//Adafruit_LSM9DS1 lsm = Adafruit_LSM9DS1(LSM9DS1_XGCS, LSM9DS1_MCS);
 
 
 void setupSensor()
 {
-  // 1.) Set the accelerometer range
-  //lsm.setupAccel(lsm.LSM9DS1_ACCELRANGE_2G);
-  //lsm.setupAccel(lsm.LSM9DS1_ACCELRANGE_4G);
-  //lsm.setupAccel(lsm.LSM9DS1_ACCELRANGE_8G);
-  lsm.setupAccel(lsm.LSM9DS1_ACCELRANGE_16G);
-  
-  // 2.) Set the magnetometer sensitivity
-  //lsm.setupMag(lsm.LSM9DS1_MAGGAIN_4GAUSS);
-  //lsm.setupMag(lsm.LSM9DS1_MAGGAIN_8GAUSS);
-  //lsm.setupMag(lsm.LSM9DS1_MAGGAIN_12GAUSS);
-  //lsm.setupMag(lsm.LSM9DS1_MAGGAIN_16GAUSS);
 
-  // 3.) Setup the gyroscope
-  //lsm.setupGyro(lsm.LSM9DS1_GYROSCALE_245DPS);
-  //lsm.setupGyro(lsm.LSM9DS1_GYROSCALE_500DPS);
-  //lsm.setupGyro(lsm.LSM9DS1_GYROSCALE_2000DPS);
+  lsm.setupAccel(lsm.LSM9DS1_ACCELRANGE_16G);
+
 }
+
 
 
 void setup() 
@@ -61,6 +56,16 @@ void setup()
 
   // helper to just set the default scaling we want, see above!
   setupSensor();
+}
+
+void sendSensorData(float max_x, float max_y, float max_z) {
+  request.hostname = "192.168.2.111";
+  request.port = 3002;
+  request.path = "/sensor-data";
+  request.body = "{\"max_x\":\"" + String(max_x) + "\", \"max_y\":\"" + String(max_y) + "\", \"max_z\":\"" + String(max_z) + "\"}";
+  Serial.println("Before HTTP Post");
+  http.post(request, response, headers);
+  Serial.println("After HTTP Post");
 }
 
 int count = 0;
@@ -106,9 +111,7 @@ void loop()
     }
     Serial.println("Max values over last 2000 ticks: "); 
     Serial.print("max_x: "); Serial.print(max_x); Serial.print("  max_y: "); Serial.print(max_y); Serial.print("  max_z: "); Serial.println(max_z);
-    Particle.publish("max_x", String(max_x));
-    Particle.publish("max_y", String(max_y));
-    Particle.publish("max_z", String(max_z));
+    sendSensorData(max_x, max_y, max_z);
     Serial.println("");
     Serial.println("Max values over all ticks: ");
     Serial.print("pmax_x: "); Serial.print(pmax_x); Serial.print("  pmax_y: "); Serial.print(pmax_y); Serial.print("  pmax_z: "); Serial.println(pmax_z);

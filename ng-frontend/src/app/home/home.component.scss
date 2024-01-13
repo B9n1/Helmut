@@ -15,10 +15,21 @@
   justify-content: space-around;
 }
 
-.helmet-icon {
+.helmet-icon-green {
   width: 90%;
   height: 48%;
-  background-image: url("../../assets/helmet.png");
+  background-image: url("../../assets/Helmut_Icon_green.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.helmet-icon-red {
+  width: 90%;
+  height: 48%;
+  background-image: url("../../assets/Helmut_Icon_red.svg");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;

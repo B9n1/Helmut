@@ -14,11 +14,12 @@ export interface SensorData {
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  CRASH_THRESHOLD: number = 100;
+  CRASH_THRESHOLD: number = 230;
   sensorData: SensorData = {} as SensorData;
   alert: boolean = false;
+  lastValue: number = 0;
   maxValue: number = 0;
-  maxValueCrash: number = 30;
+  maxValueCrash: number = 0;
 
   constructor(private sseService: SseService, private cdr: ChangeDetectorRef) {}
 
@@ -34,7 +35,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     if ((Math.round(v3 * 100) / 100) > tempMaxValue) {
       tempMaxValue = v3;
     }
-    // console.log("Max value between " + v1 + ", " + v2 + ", " + v3 + " is " + (Math.round(tempMaxValue * 100) / 100));
     return (Math.round(tempMaxValue * 100) / 100);
   }
 
@@ -52,6 +52,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         if (this.maxValue < this.getMaxValueRoundedTo2Digits(this.sensorData.max_x, this.sensorData.max_y, this.sensorData.max_z) && this.alert == false) {
           this.maxValue = this.getMaxValueRoundedTo2Digits(this.sensorData.max_x, this.sensorData.max_y, this.sensorData.max_z);
         }
+        this.lastValue = this.getMaxValueRoundedTo2Digits(this.sensorData.max_x, this.sensorData.max_y, this.sensorData.max_z);
         this.cdr.detectChanges();
       },
       (error) => {

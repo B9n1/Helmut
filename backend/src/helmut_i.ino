@@ -44,12 +44,10 @@ void setup()
     delay(1); // will pause Zero, Leonardo, etc until serial console opens
   }
   
-  Serial.println("LSM9DS1 data read demo");
-  
   // Try to initialise and warn if we couldn't detect the chip
   if (!lsm.begin())
   {
-    Serial.println("Oops ... unable to initialize the LSM9DS1. Check your wiring!");
+    Serial.println("Unable to initialize the LSM9DS1. Check your wiring!");
     while (1);
   }
   Serial.println("Found LSM9DS1 9DOF");
@@ -58,14 +56,13 @@ void setup()
   setupSensor();
 }
 
+//helper function to send sensor data to webserver
 void sendSensorData(float max_x, float max_y, float max_z) {
-  request.hostname = "192.168.2.111";
+  request.hostname = "192.168.2.111"; //needs to be changed to the IP of the server
   request.port = 3002;
   request.path = "/sensor-data";
   request.body = "{\"max_x\":\"" + String(max_x) + "\", \"max_y\":\"" + String(max_y) + "\", \"max_z\":\"" + String(max_z) + "\"}";
-  Serial.println("Before HTTP Post");
   http.post(request, response, headers);
-  Serial.println("After HTTP Post");
 }
 
 int count = 0;
@@ -85,20 +82,17 @@ void loop()
 
   lsm.getEvent(&a, &m, &g, &temp); 
 
-
   if (fabs(a.acceleration.x) > fabs(max_x)) {
     max_x = fabs(a.acceleration.x);
   }
-
   if (fabs(a.acceleration.y) > fabs(max_y)) {
     max_y = fabs(a.acceleration.y);
   }
-
   if (fabs(a.acceleration.z) > fabs(max_z)) {
     max_z = fabs(a.acceleration.z);
   }
 
-  if(count > 2000) {
+  if(count > 300) {
     count = 0;
     if (fabs(max_x) > fabs(pmax_x)) {
       pmax_x = max_x;
@@ -109,15 +103,7 @@ void loop()
     if (fabs(max_z) > fabs(pmax_z)) {
       pmax_z = max_z;
     }
-    Serial.println("Max values over last 2000 ticks: "); 
-    Serial.print("max_x: "); Serial.print(max_x); Serial.print("  max_y: "); Serial.print(max_y); Serial.print("  max_z: "); Serial.println(max_z);
     sendSensorData(max_x, max_y, max_z);
-    Serial.println("");
-    Serial.println("Max values over all ticks: ");
-    Serial.print("pmax_x: "); Serial.print(pmax_x); Serial.print("  pmax_y: "); Serial.print(pmax_y); Serial.print("  pmax_z: "); Serial.println(pmax_z);
-    Serial.println("");
-    Serial.println("-----------------------------------------------------------------------------------------------------");
-    Serial.println("");
     max_x = 0;
     max_y = 0;
     max_z = 0;
